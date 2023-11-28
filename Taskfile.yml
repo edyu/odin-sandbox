@@ -1,0 +1,29 @@
+version: '3'
+
+tasks:
+  default:
+    cmds:
+      - task: test
+
+  build:
+    cmds:
+      - odin build sandbox -out=bin/sandbox
+    aliases:
+      - b
+    silent: true
+    sources:
+      - './src/**/*.odin'
+    generates:
+      - bin/sandbox
+
+  test:
+    cmds:
+      - odin test sandbox -out:bin/sandbox
+    aliases:
+      - t
+    method: none
+    silent: true
+    sources:
+      - '**/*.odin'
+
+interval: 250ms
