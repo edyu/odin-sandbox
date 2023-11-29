@@ -5,6 +5,16 @@ tasks:
     cmds:
       - task: test
 
+  run:
+    deps:
+      - build
+    cmds:
+      - bin/sandbox
+    aliases:
+      - r
+    silent: true
+    method: none
+
   build:
     cmds:
       - odin build sandbox -out=bin/sandbox
@@ -12,9 +22,30 @@ tasks:
       - b
     silent: true
     sources:
-      - './src/**/*.odin'
+      - './sandbox/**/*.odin'
     generates:
       - bin/sandbox
+
+  build_debug:
+    cmds:
+      - odin build sandbox -out=bin/sandbox-debug -o:none -debug
+    aliases:
+      - bd
+    silent: true
+    sources:
+      - './sandbox/**/*.odin'
+    generates:
+      - bin/sandbox-debug
+
+  debug:
+    deps:
+      - build_debug
+    cmds:
+      - gdb bin/sandbox-debug
+    aliases:
+      - d
+    silent: true
+    method: none
 
   test:
     cmds:
